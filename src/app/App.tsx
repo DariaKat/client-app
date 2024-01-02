@@ -1,9 +1,17 @@
-import { FC } from "react";
+import { FC, Suspense } from "react";
+
+import { RouterApp } from "./providers/routing/RouterApp";
+
 import "./App.scss";
 
 export const App: FC = () => {
-  return (
-    <>
-    </>
-  );
+    return (
+        <>
+            <Suspense fallback="...">
+                <div>
+                    <RouterApp />
+                </div>
+            </Suspense>
+        </>
+    );
 };
