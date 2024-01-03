@@ -12,8 +12,28 @@
 	src: url(/fonts/OpenSans-Bold.ttf); 
 }
 
+:root {
+    // Размер шапки
+    --navbar-height: 68px;
+
+    --font-color-text: #000;
+    --font-color-description: #363636;
+
+    --font-size-header: 24px;
+    --font-size-text: 16px;
+    --font-size-description: 12px;
+}
+
 * {
     font-family: 'OpenSans';
     margin: 0;
     padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+	margin-top: calc(var(--navbar-height) + 32px);
 }
