@@ -2,6 +2,9 @@ import { RouteProps } from 'react-router-dom';
 
 import { MainPage } from '@/pages/MainPage';
 import { NotFound } from '@/pages/NotFound';
+import { UserPage } from '@/pages/UserPage';
+import { LoginPage } from '@/pages/LoginPage';
+import { RegistrPage } from '@/pages/RegisrPage';
 
 enum AppRoute {
     MAIN = 'main',
@@ -28,7 +31,7 @@ export const RouteConfig: Record<AppRoute, RouteProps> = {
     },
     [AppRoute.USER]: {
         path: RoutePath.user,
-        element: <>User</>,
+        element: <UserPage />,
     },
     [AppRoute.ADMIN]: {
         path: RoutePath.admin,
@@ -36,11 +39,11 @@ export const RouteConfig: Record<AppRoute, RouteProps> = {
     },
     [AppRoute.LOGIN]: {
         path: RoutePath.login,
-        element: <>Login</>,
+        element: <LoginPage />,
     },
     [AppRoute.REGISTR]: {
         path: RoutePath.registr,
-        element: <>Reistr</>,
+        element:  <RegistrPage />,
     },
     [AppRoute.NOT_FOUND]: {
         path: RoutePath.not_found,

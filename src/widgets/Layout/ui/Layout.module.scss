@@ -6,6 +6,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    z-index: 20;
+    background-color: #fff;
     box-shadow: 0px -17px 100px -8px rgba(34, 60, 80, 0.2);
 
    &_logo_image {

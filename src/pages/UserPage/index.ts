@@ -1,0 +1,1 @@
+export { UserAsyncPage as UserPage } from './ui/UserPage.async';

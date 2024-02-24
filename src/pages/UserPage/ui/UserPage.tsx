@@ -1,28 +1,24 @@
-import { FC, useState } from "react";
-import Alert from '@mui/material/Alert';
+import { FC } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+
+import { ProfileHeader } from "@/widgets/Profile";
 import { Post } from "@/entities";
 
-const MainPage: FC = () => {
+const UserPage: FC = () => {
     const date = new Date();
-
-    const [closeAlert, setCloseAlert] = useState(true);
-
-    const onClose = () => setCloseAlert(false);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container justifyContent="center" spacing={2}>
-                <Grid item xs={4}>
-                    {closeAlert &&
-                        <Alert severity="info" onClose={onClose} style={{ marginBottom: '24px' }}>
-                            Спасибо, что решили воспользоваться нашим приложением!
-                        </Alert>}
+            <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                <Grid item xs={10}>
+                    <div style={{ margin: '0 auto', display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+                        <ProfileHeader />
+                    </div>
                 </Grid>
             </Grid>
             <Grid container justifyContent="center" spacing={2}>
-                <Grid item xs={6} container>
+                <Grid item xs={10} container>
                     <Post
                         user="admin admin"
                         time={`${date}`}
@@ -31,10 +27,14 @@ const MainPage: FC = () => {
                         user="user user"
                         time={`${date}`}
                         content={{ text: 'какой-то текст написал пользователь давайте все вместе похлопаем ему' }} />
+                    <Post
+                        user="user user"
+                        time={`${date}`}
+                        content={{ text: 'какой-то текст написал пользователь давайте все вместе похлопаем ему' }} />   
                 </Grid>
             </Grid>
         </Box>
     );
 };
 
-export default MainPage;
+export default UserPage;
