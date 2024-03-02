@@ -6,10 +6,12 @@ import { RouteConfig } from './RouterConfig';
 
 export const RouterApp: FC = () => (
     <Suspense fallback={
-        <CircularProgress
-            color="secondary"
-            variant="indeterminate"
-        />
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress
+                color="secondary"
+                variant="indeterminate"
+            />
+        </div> 
     }>
         <Routes>
             {Object.values(RouteConfig).map(({ path, element }) => (

@@ -1,9 +1,9 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { deepPurple } from '@mui/material/colors';
 
 import style from "./Post.module.scss";
-import { Link } from "react-router-dom";
 
 interface IPostProps {
     user: string;

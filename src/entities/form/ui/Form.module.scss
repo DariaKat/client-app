@@ -1,0 +1,24 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0px -17px 100px -8px rgba(34, 60, 80, 0.2);
+    padding: 24px;
+    svg {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 24px;
+    }
+
+    &_description {
+        font-size: var(--font-size-description);
+    }
+    &_link {
+        color: rgb(107, 107, 255);
+    }
+}
