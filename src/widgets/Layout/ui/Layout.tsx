@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "@/app/providers/authProvider";
+import { LogoutBtn } from "@/feature/Logout";
 
 import style from "./Layout.module.scss";
 
@@ -15,6 +16,7 @@ export const Layout: FC = () => {
             </div>
             <div className={style.layout_nav}>
                 {authUser?.user ? <Link to={`/user/${authUser.user._id}`}>Личный кабинет</Link> : <Link to="/login">Авторизация</Link>}
+                {authUser?.user && <LogoutBtn />}
             </div>
         </header>
     );
