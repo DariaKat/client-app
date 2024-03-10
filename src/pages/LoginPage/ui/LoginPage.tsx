@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 
-import { ga } from "@/app/providers/authProvider/config/firebase";
+import { ga } from "@/app/providers/authProvider";
 import { Form } from "@/entities/form";
 
 const LoginPage: FC = () => {

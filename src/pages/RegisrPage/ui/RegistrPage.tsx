@@ -2,8 +2,9 @@ import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Snackbar from '@mui/material/Snackbar';
+import { doc, setDoc } from "firebase/firestore";
 
-import { ga } from "@/app/providers/authProvider/config/firebase";
+import { db, ga } from "@/app/providers/authProvider";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Form } from "@/entities/form";
@@ -24,6 +25,12 @@ const RegistrPage: FC = () => {
             if (ga.currentUser) { 
                 await updateProfile(ga.currentUser, {
                     displayName: data.name,
+                });
+
+                await setDoc(doc(db, "UserProfile", String(user.user.uid)), {
+                    _id: user.user.uid,
+                    name: data.name,
+                    role: 'USER',
                 });
             }
         

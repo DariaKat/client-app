@@ -7,5 +7,10 @@ declare global {
         name?: string;
     }
 
-    type NameType = 'login' | 'password' | 'name';
+    interface FormEditProfile { 
+        name?: string;
+        description?: string;
+    }
+
+    type NameType = 'login' | 'password' | 'name' | 'description';
 }

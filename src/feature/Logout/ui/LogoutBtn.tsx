@@ -2,7 +2,7 @@ import { FC } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-import { ga } from "@/app/providers/authProvider/config/firebase";
+import { ga } from "@/app/providers/authProvider";
 
 import style from "./LogoutBtn.module.scss";
 

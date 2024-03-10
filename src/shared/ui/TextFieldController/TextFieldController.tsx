@@ -5,12 +5,14 @@ import { Control, Controller } from "react-hook-form";
 
 interface ITextFieldControllerProps {
     name: NameType;
-    control: Control<FormInterface>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: Control<any>;
     label: string;
     type?: string;
+    required?: boolean;
 }
 
-export const TextFieldController: FC<ITextFieldControllerProps> = ({ name, control, label, type }) => {
+export const TextFieldController: FC<ITextFieldControllerProps> = ({ name, control, label, type, required = true }) => {
     return (
         <Controller
             name={name}
@@ -29,7 +31,7 @@ export const TextFieldController: FC<ITextFieldControllerProps> = ({ name, contr
                     variant="outlined"
                     type={type}
                     aria-describedby="component-error-text"
-                    required
+                    required={required}
                 />
             )}
         />

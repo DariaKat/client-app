@@ -1,12 +1,31 @@
-import { FC } from "react";
+import { FC, useEffect, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 import { ProfileHeader } from "@/widgets/Profile";
 import { Post } from "@/entities";
+import { db } from "@/app/providers/authProvider";
 
 const UserPage: FC = () => {
     const date = new Date();
+    const params = useParams();
+    const navigate = useNavigate();
+
+    const getUserProfile = useCallback(async () => {
+        const docRef = doc(db, "UserProfile", params.userId as string);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+        } else {
+            navigate("/404");   
+        }
+    }, [params.userId, navigate]);
+
+    useEffect (() => {
+        getUserProfile();  
+    }, [getUserProfile]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>

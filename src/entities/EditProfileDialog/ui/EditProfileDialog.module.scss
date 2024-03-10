@@ -1,0 +1,24 @@
+.upload_avatar, .upload_img, .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    row-gap: 10px;
+}
+
+.upload_img {
+    margin-top: 24px;
+}
+
+.upload_img__image {
+    border-radius: 10px;
+    max-width: 100%;
+    block-size: auto;
+    aspect-ratio: 4/1;
+    object-fit: cover;
+}
+
+.form {
+    margin-top: 20px;
+}
