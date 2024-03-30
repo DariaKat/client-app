@@ -1,88 +1,62 @@
-import { FC, useState, ChangeEvent } from "react";
+import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';    
 import DialogTitle from '@mui/material/DialogTitle';
-import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import Avatar from "@mui/material/Avatar";
-import Typography from '@mui/material/Typography';
 import { doc, setDoc } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-
+import { db, useAuth, storage } from "@/app/providers/authProvider";
+import { UploadFile } from "./UploadFile";
 import { TextFieldController } from "@/shared/ui/TextFieldController/TextFieldController";
 
 import style from "./EditProfileDialog.module.scss";
-import { db, storage, useAuth } from "@/app/providers/authProvider";
-import { convertStringToBuffer } from "../lib/convert";
 
-const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-});
+
+
 
 interface IEditProfileDialogProps {
     open: boolean;
     handleClose: () => void;
+    profile: Profile;
 }
 
-export const EditProfileDialog: FC<IEditProfileDialogProps> = ({ handleClose, open }) => {
+export const EditProfileDialog: FC<IEditProfileDialogProps> = ({ handleClose, open, profile }) => {
     const { handleSubmit, control } = useForm<FormEditProfile>();
     const user = useAuth();
+    const navigate = useNavigate();
 
-    const [imageUrlAvatar, setImageUrlAvatar] = useState<string | ArrayBuffer | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | ArrayBuffer | null>(null);
+    const [fileAvatar, setFileAvatar] = useState<File | null>(null);
+    const [fileBackground, setFileackground] = useState<File | null>(null);
 
-    const handleFileUploadAvatar = (event: ChangeEvent<HTMLInputElement>) => {
-        if (!event.target.files) {
-            return;
-        }
-        const file = event.target.files[0];
-        const reader = new FileReader();
-    
-        reader.onloadend = () => {
-            setImageUrlAvatar(reader.result);
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
-        if (!event.target.files) {
-            return;
-        }
-        const file = event.target.files[0];
-        const reader = new FileReader();
-    
-        reader.onloadend = () => {
-            setImageUrl(reader.result);
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const onSubmit = async (data: FormEditProfile) => { 
-        let photoUrl = null;
-        if (imageUrlAvatar) { 
-            const storageRef = ref(storage, `files/${user?.user?._id}`);
-            const imgAvatar = typeof imageUrlAvatar === 'string' ? convertStringToBuffer(imageUrlAvatar) : imageUrlAvatar;
-            await uploadBytesResumable(storageRef, imgAvatar);
+    const onSubmit = async (data: FormEditProfile) => {
+        let photoUrl: string | null = null;
+        let photoBackgroundUrl: string | null = null;
+        if (fileAvatar) {
+            const storageRef = ref(storage, `avatar/${user?.user?._id}`);
+            await uploadBytesResumable(storageRef, fileAvatar);
             photoUrl = await getDownloadURL(storageRef);
+        }
+        if (fileBackground) {
+            const storageRef = ref(storage, `background/${user?.user?._id}`);
+            await uploadBytesResumable(storageRef, fileBackground);
+            photoBackgroundUrl = await getDownloadURL(storageRef);
         }
 
         await setDoc(doc(db, "UserProfile", String(user?.user?._id)), {
             _id: user?.user?._id,
-            avatarUrl: photoUrl,
-            role: 'ADMIN',
+            avatarUrl: photoUrl ? photoUrl : profile.avatarUrl,
+            backgroundUrl: photoBackgroundUrl ? photoBackgroundUrl : profile.backgroundUrl,
+            role: profile.role,
             ...data,
         });
+
+        navigate(0);
+
+        handleClose();
     };
 
     return (
@@ -91,57 +65,32 @@ export const EditProfileDialog: FC<IEditProfileDialogProps> = ({ handleClose, op
             onClose={handleClose}
         >
             <DialogTitle>Редактирование профиля</DialogTitle>
-            <DialogContent>
+            <DialogContent className={style.dialog}>
                 <DialogContentText>
-                    <div className={style.upload_avatar}>
-                        <Typography variant="h6">
-                            Аватар
-                        </Typography>
-                        {imageUrlAvatar && <Avatar alt="Аватар" src={String(imageUrlAvatar)} sx={{ width: 100, height: 100 }} />}
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            tabIndex={-1}
-                            startIcon={<CloudUploadIcon />}
-                        >
-                            Загрузить фотографию
-                            <VisuallyHiddenInput type="file" onChange={handleFileUploadAvatar}/>
-                        </Button>
-                    </div>
-                    <div className={style.upload_img}>
-                        <Typography variant="h6">
-                            Обложка
-                        </Typography>
-                        {imageUrl && <img alt="Обложка" className={style.upload_img__image} src={String(imageUrl)} />}
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            tabIndex={-1}
-                            startIcon={<CloudUploadIcon />}
-                        >
-                            Загрузить фотографию
-                            <VisuallyHiddenInput type="file" onChange={handleFileUpload}/>
-                        </Button>
-                    </div>
-                    <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+                    <UploadFile setFile={setFileAvatar} title="Аватар" className={style.upload_avatar} defaultUrl={profile.avatarUrl} />
+                    <UploadFile setFile={setFileackground} title="Обложка" className={style.upload_img} defaultUrl={profile.backgroundUrl}/>
+                    <form className={style.form} id="myform" onSubmit={handleSubmit(onSubmit)}>
                         <TextFieldController
                             name="name"
                             label="Имя пользователя"
+                            defaultValue={profile.name}
                             control={control}
                         />
                         <TextFieldController
                             name="description"
                             label="Описание в профиле"
+                            defaultValue={profile.description}
                             control={control}
                         />
-                        <Button variant="contained" type="submit">
-                            Обновить
-                        </Button>
+                       
                     </form>
                 </DialogContentText>
             </DialogContent>
+            <DialogActions>
+                <Button variant="contained" type="submit" form="myform">
+                    Обновить
+                </Button>
+            </DialogActions>
         </Dialog>
     );
 };

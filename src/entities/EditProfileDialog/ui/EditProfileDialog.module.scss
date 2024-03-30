@@ -1,3 +1,8 @@
+.dialog {
+    max-width: 500px;
+    width: 100%;
+}
+
 .upload_avatar, .upload_img, .form {
     display: flex;
     flex-direction: column;
@@ -7,16 +12,23 @@
     row-gap: 10px;
 }
 
-.upload_img {
-    margin-top: 24px;
+.upload_avatar {
+    .image {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+    }
 }
 
-.upload_img__image {
-    border-radius: 10px;
-    max-width: 100%;
-    block-size: auto;
-    aspect-ratio: 4/1;
-    object-fit: cover;
+.upload_img {
+    margin-top: 24px;
+    .image {
+        border-radius: 10px;
+        max-width: 100%;
+        block-size: auto;
+        aspect-ratio: 4/1;
+        object-fit: cover;
+    }
 }
 
 .form {

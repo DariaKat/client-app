@@ -5,7 +5,11 @@ import { EditProfileDialog } from "@/entities";
 
 import style from "./EditProfileAction.module.scss";
 
-export const EditProfileAction: FC = () => {
+interface IProps { 
+    profile: Profile;
+}
+
+export const EditProfileAction: FC<IProps> = ({ profile }) => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -19,7 +23,7 @@ export const EditProfileAction: FC = () => {
     return (
         <div className={style.editProfileAction}>
             <Button variant="contained" onClick={handleClickOpen}>Редактировать</Button>
-            <EditProfileDialog open={open} handleClose={handleClose} />
+            <EditProfileDialog open={open} handleClose={handleClose} profile={ profile } />
         </div>
     );
 };
