@@ -8,8 +8,7 @@ import { fetchProfile } from "../model/fatchProfile";
 import { ProfileHeader } from "@/entities/Profile";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import { userSelector } from "../model/userSlice";
-
-// import style from "./Profile.module.scss";
+import { CreatePost } from "@/feature/ActionPost";
 
 export const Profile: FC = () => {
     const date = new Date();
@@ -48,16 +47,9 @@ export const Profile: FC = () => {
                 </Grid>
                 <Grid container justifyContent="center" spacing={2}>
                     <Grid item xs={10} container>
+                        <CreatePost />
                         <Post
                             user="admin admin"
-                            time={`${date}`}
-                            content={{ text: 'какой-то текст написал пользователь давайте все вместе похлопаем ему' }} />
-                        <Post
-                            user="user user"
-                            time={`${date}`}
-                            content={{ text: 'какой-то текст написал пользователь давайте все вместе похлопаем ему' }} />
-                        <Post
-                            user="user user"
                             time={`${date}`}
                             content={{ text: 'какой-то текст написал пользователь давайте все вместе похлопаем ему' }} />   
                     </Grid>

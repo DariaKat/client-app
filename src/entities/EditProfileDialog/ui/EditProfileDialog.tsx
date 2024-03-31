@@ -65,7 +65,7 @@ export const EditProfileDialog: FC<IEditProfileDialogProps> = ({ handleClose, op
             onClose={handleClose}
         >
             <DialogTitle>Редактирование профиля</DialogTitle>
-            <DialogContent className={style.dialog}>
+            <DialogContent>
                 <DialogContentText>
                     <UploadFile setFile={setFileAvatar} title="Аватар" className={style.upload_avatar} defaultUrl={profile.avatarUrl} />
                     <UploadFile setFile={setFileackground} title="Обложка" className={style.upload_img} defaultUrl={profile.backgroundUrl}/>

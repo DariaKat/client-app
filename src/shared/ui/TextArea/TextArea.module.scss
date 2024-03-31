@@ -1,0 +1,21 @@
+.textArea {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    &_textarea {
+        resize: none;
+        width: 100%;
+        min-height: 32px;
+        border: none;
+        &:focus {
+            outline: none !important;
+            border: none;
+          }
+    }
+
+    &_addFile {
+        span {
+            margin: 0;
+        }
+    }
+}
