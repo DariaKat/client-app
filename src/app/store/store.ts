@@ -1,9 +1,11 @@
+import { adminReducer } from '@/feature/AdminPanel';
 import { userReducer } from '@/widgets/Profile';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
     reducer: {
-        userReducer
+        userReducer,
+        adminReducer
     },
 });
 

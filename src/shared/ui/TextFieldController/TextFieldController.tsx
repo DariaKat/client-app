@@ -4,7 +4,7 @@ import { Control, Controller } from "react-hook-form";
 
 
 interface ITextFieldControllerProps {
-    name: NameType;
+    name: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     control: Control<any>;
     label: string;

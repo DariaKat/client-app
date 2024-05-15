@@ -1,0 +1,13 @@
+.adminPanel {
+    margin: 20px 0;
+
+    &_actions {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        row-gap: 10px;
+        column-gap: 10px;
+    }
+}

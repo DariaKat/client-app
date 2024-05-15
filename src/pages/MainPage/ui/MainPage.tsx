@@ -2,11 +2,10 @@ import { FC, useState } from "react";
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { Post } from "@/entities";
+import { NoData } from "@/shared/ui/NoData/NoData";
+import Diversity1Icon from '@mui/icons-material/Diversity1';
 
 const MainPage: FC = () => {
-    const date = new Date();
-
     const [closeAlert, setCloseAlert] = useState(true);
 
     const onClose = () => setCloseAlert(false);
@@ -23,14 +22,7 @@ const MainPage: FC = () => {
             </Grid>
             <Grid container justifyContent="center" spacing={2}>
                 <Grid item xs={6} container>
-                    <Post
-                        user="admin admin"
-                        time={`${date}`}
-                        content={{ text: 'какой-то текст написал пользователь давайте все вместе похлопаем ему' }} />
-                    <Post
-                        user="user user"
-                        time={`${date}`}
-                        content={{ text: 'какой-то текст написал пользователь давайте все вместе похлопаем ему' }} />
+                    <NoData icon={<Diversity1Icon />} text='Сервис онлайн-записи для бьюти-мастеров предоставляет удобный и быстрый способ для клиентов записаться на услуги, а также упрощает работу самих мастеров, сокращая время на обработку заявок и повышая эффективность работы салона красоты.' />
                 </Grid>
             </Grid>
         </Box>

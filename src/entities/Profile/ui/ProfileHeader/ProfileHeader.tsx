@@ -1,9 +1,8 @@
 import { FC } from "react";
 import {useParams} from 'react-router-dom';
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 
-import { EditProfileAction } from "@/feature/EditProfileAction";
+import { GroupButton } from '../GroupButton/GroupButton';
 import { useAuth } from "@/app/providers/authProvider";
 
 import style from "./ProfileHeader.module.scss";
@@ -34,8 +33,7 @@ export const ProfileHeader: FC<IProfileHeaderProps> = ({ profile }) => {
                         <span className={style.info}>{profile?.description}</span>
                     </div>
                     <div className={style.profileHeader_container__wrap_description_groupBtns}>
-                        {user?.user?._id === params.userId && <EditProfileAction profile={ profile } />}
-                        <Button variant="contained">Запись</Button>
+                        <GroupButton myPage={user?.user?._id === params.userId} role={profile?.role} profile={profile} />
                     </div>
                 </div>
             </div>

@@ -15,9 +15,6 @@ import { TextFieldController } from "@/shared/ui/TextFieldController/TextFieldCo
 
 import style from "./EditProfileDialog.module.scss";
 
-
-
-
 interface IEditProfileDialogProps {
     open: boolean;
     handleClose: () => void;

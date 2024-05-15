@@ -20,7 +20,7 @@ const LoginPage: FC = () => {
                 data.login,
                 data.password
             );
-            user && navigate("/");
+            user && navigate(`/user/${user.user.uid}`);
         } catch (error: unknown) {
             setOpen(true);
         }

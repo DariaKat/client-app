@@ -30,7 +30,7 @@ const RegistrPage: FC = () => {
                 await setDoc(doc(db, "UserProfile", String(user.user.uid)), {
                     _id: user.user.uid,
                     name: data.name,
-                    role: 'USER',
+                    role: UserProfileRole.USER,
                 });
             }
         
