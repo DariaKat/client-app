@@ -9,14 +9,17 @@ import VkIcon from "@/shared/assets/vk-v2-svgrepo-com.svg?react";
 import style from "./ContactInfo.module.scss";
 import { useGetContactInfo } from "../hooks/useGetContactInfo";
 import { FormContact } from "./FormContact";
+import { AddProcedureDialog } from "@/entities/AddProcedureDialog";
 
 interface IContactInfoProps {
     uuid: string;
+    myUuid: string;
     isMyPage: boolean;
 }
 
-export const ContactInfo: FC<IContactInfoProps> = ({ uuid, isMyPage }) => {
+export const ContactInfo: FC<IContactInfoProps> = ({ uuid, myUuid, isMyPage }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenProcedure, setIsOpenProcedure] = useState(false);
 
     const onOpen = () => { 
         setIsOpen(true);
@@ -25,6 +28,15 @@ export const ContactInfo: FC<IContactInfoProps> = ({ uuid, isMyPage }) => {
     const onClose = () => { 
         setIsOpen(false);
     };
+
+    const onOpenProcedure = () => { 
+        setIsOpenProcedure(true);
+    };
+
+    const onCloseProcedure = () => { 
+        setIsOpenProcedure(false);
+    };
+
 
     const { contact } = useGetContactInfo(uuid);
 
@@ -60,7 +72,8 @@ export const ContactInfo: FC<IContactInfoProps> = ({ uuid, isMyPage }) => {
                     </div>
                 </div>}
                 <div className={style.contactInfo__item}>
-                    <Button className={style.procedure_btns} variant="contained">Запись</Button>
+                    <Button className={style.procedure_btns} variant="contained" onClick={onOpenProcedure}>Запись</Button>
+                    {isOpenProcedure && <AddProcedureDialog onClose={onCloseProcedure} uuid={uuid} myUuid={myUuid} />}
                 </div>
             </div>
         </>

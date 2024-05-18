@@ -1,42 +1,50 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store/store";
-import { fetchProfile } from "./fatchProfile";
+import { fetchListTimeData } from "./fetchListTime";
 
-export interface ProfileState {
+export interface ITimeList {
+    _id: string;
+    segments: {
+        date: string;
+        times: string[];
+    }[];
+ }
+
+export interface TimeState {
     loading: boolean;
-    profile: Profile | null;
+    timeList: ITimeList | null;
     error: string | undefined;
   }
 
-const initialState: ProfileState = {
+const initialState: TimeState = {
     loading: false,
-    profile: null,
+    timeList: null,
     error: undefined,
 };
 
-export const userSlice = createSlice({
-    name: "profile",
+export const timeSlice = createSlice({
+    name: "listTime",
     initialState,
     extraReducers: (builder) => { 
-        builder.addCase(fetchProfile.pending, (state) => {
+        builder.addCase(fetchListTimeData.pending, (state) => {
             if (state) {
                 state.loading = true;
             }
         });
-        builder.addCase(fetchProfile.fulfilled, (state, action) => {
+        builder.addCase(fetchListTimeData.fulfilled, (state, action) => {
             if (state) {
                 state.loading = false;
                 if (action.payload) {
                     //eslint-disable-next-line
                     //@ts-ignore
-                    state.profile = action.payload;
+                    state.timeList = action.payload;
                 }
             }
         });
-        builder.addCase(fetchProfile.rejected, (state, action) => {
+        builder.addCase(fetchListTimeData.rejected, (state, action) => {
             if (state) {
                 state.loading = false;
-                state.profile = null;
+                state.timeList = null;
                 if (action.error) {
                     state.error = action.error.message;
                 }
@@ -44,7 +52,7 @@ export const userSlice = createSlice({
         });
     },
     reducers: {
-        getUser: (state, action: PayloadAction<Profile>) => {
+        getTimeList: (state, action: PayloadAction<Profile>) => {
             if (state && action.payload) {
                 state = Object.assign(state, action.payload);
             }
@@ -52,7 +60,7 @@ export const userSlice = createSlice({
     },
 });
   
-export const { getUser } = userSlice.actions;
+export const { getTimeList } = timeSlice.actions;
     
-export const userSelector = (state: RootState) => state.userReducer;
-export default userSlice.reducer;
+export const timeSelector = (state: RootState) => state.timeReducer;
+export default timeSlice.reducer;

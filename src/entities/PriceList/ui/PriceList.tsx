@@ -27,12 +27,12 @@ export const PriceList: FC<IPriceListProps> = ({ isMyPage, uuid }) => {
             {isMyPage && (
                 <>
                     <Button onClick={onOpen}>Добавить прайс-лист</Button>
-                    {isOpen && <DialogModalPriceList onClose={onClose} uuid={uuid} defaultValue={priceList && priceList.priceList} />}
+                    {isOpen && <DialogModalPriceList onClose={onClose} uuid={uuid} defaultValue={priceList?.priceList} />}
                 </>
             )}
             <h1 className={style.priceList_title}>Прайс лист</h1>
             <div className={style.priceList_list}>
-                {priceList && priceList.priceList.map((item: {name: string, price: string}, index: number) => 
+                {priceList && priceList?.priceList.map((item: {name: string, price: string}, index: number) => 
                     <div className={style.priceList_list__item} key={index}>
                         <span className={style.priceList_list__item_name}>
                             {item.name}

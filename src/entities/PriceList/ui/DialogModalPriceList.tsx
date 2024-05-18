@@ -14,7 +14,7 @@ import style from './PriceList.module.scss';
 
 interface IDialogModalPriceListProps {
     uuid: string;
-    defaultValue: {
+    defaultValue?: {
         name: string, price: string
     }[];
     onClose: () => void;
@@ -33,22 +33,28 @@ export const DialogModalPriceList: FC<IDialogModalPriceListProps> = ({ onClose, 
     const [formData, setFormData] = useState(defaultValue);
 
     const addField = () => {
-        setFormData([...formData, { name: '', price: '' }]);
+        if (formData) {
+            setFormData([...formData, { name: '', price: '' }]);
+        }
     };
 
     const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const newFormData = formData.map((item, idx) => {
-            if (index === idx) {
-                return { ...item, [event.target.name]: event.target.value };
-            }
-            return item;
-        });
-        setFormData(newFormData);
+        if (formData) {
+            const newFormData = formData.map((item, idx) => {
+                if (index === idx) {
+                    return { ...item, [event.target.name]: event.target.value };
+                }
+                return item;
+            });
+            setFormData(newFormData);
+        }
     };
 
     const handleRemoveField = (index: number) => {
-        const newFormData = formData.filter((_, idx) => index !== idx);
-        setFormData(newFormData);
+        if (formData) {
+            const newFormData = formData.filter((_, idx) => index !== idx);
+            setFormData(newFormData);
+        }
     };
 
     const handleSubmit = async (event: FormEvent) => {
@@ -85,7 +91,7 @@ export const DialogModalPriceList: FC<IDialogModalPriceListProps> = ({ onClose, 
             </IconButton>
             <DialogContent dividers>
                 <form onSubmit={handleSubmit}>
-                    {formData.map((data, index) => (
+                    {formData && formData.map((data, index) => (
                         <div key={index} className={style.textFields_form}>
                             <TextField
                                 onChange={(e) => handleInputChange(index, e)}

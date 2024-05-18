@@ -1,26 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
-import { DocumentData, doc, getDoc } from "firebase/firestore";
-import { db } from "@/app/providers/authProvider";
+import { useCallback, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import { fetchListData } from "../model/fetchListData";
+import { IPriceList, priceSelector } from "../model/listSlice";
 
-export const useGetPriceList = (uuid: string) => {
-    const [priceList, setPriceList] = useState<DocumentData | null>(null);
+export const useGetPriceList = (uuid: string): {priceList: IPriceList | null} => {
+    const dispatch = useAppDispatch();
+    const priceList = useAppSelector(priceSelector);
 
     const getInfo = useCallback(async () => { 
-        try {
-            const docRef = doc(db, "PriceProcedureMaster", uuid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const data: DocumentData = docSnap.data();
-                setPriceList(data);
-            } else {
-                console.log('Нет информации');
-            }
-        } catch (err) {
-            return `${err}`;
-        }  
-    }, [uuid]);
+        dispatch(fetchListData(uuid));
+    }, [uuid, dispatch]);
 
     useEffect(() => { getInfo(); }, [getInfo]);
 
-    return {priceList};
+    return {priceList: priceList?.priceList};
 };
