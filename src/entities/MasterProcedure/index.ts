@@ -1,0 +1,1 @@
+export { UserProcedure as MasterProcedure } from './ui/UserProcedure';

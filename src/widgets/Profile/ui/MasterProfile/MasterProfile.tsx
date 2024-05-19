@@ -15,7 +15,7 @@ export const MasterProfile: FC = () => {
 
     return (
         <div>
-            {getProfile.profile && <ProfileHeader profile={getProfile.profile} />}
+            {getProfile.profile && <ProfileHeader profile={getProfile.profile} isMasterPage={user?.user?._id === params.userId}/>}
             <div>
                 <Carousel
                     uuid={params.userId as string}

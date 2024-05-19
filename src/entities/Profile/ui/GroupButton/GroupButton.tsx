@@ -1,22 +1,22 @@
 import { FC } from 'react';
-import Button from "@mui/material/Button";
 
 import { EditProfileAction } from "@/feature/EditProfileAction";
 
 import style from "./GroupButton.module.scss";
+import { ActionMasterProfile } from '@/feature/ActionMasterProfile';
 
 
 interface IGroupButtonProps {
     myPage: boolean;
-    role: "ADMIN" | "USER" | "MASTER";
     profile: Profile;
+    isMasterPage?: boolean;
 }
 
-export const GroupButton: FC<IGroupButtonProps> = ({ myPage, role, profile}) => {
+export const GroupButton: FC<IGroupButtonProps> = ({ myPage, profile, isMasterPage}) => {
     return (
         <div className={style.groupBtn_container}>
-            {myPage && <EditProfileAction profile={profile} />}
-            { !myPage && role === "MASTER" && <Button variant="contained">Запись</Button>}           
+            {myPage && <EditProfileAction profile={profile} />}    
+            {isMasterPage && <ActionMasterProfile />}
         </div>
     );
 };

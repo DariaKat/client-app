@@ -9,9 +9,10 @@ import style from "./ProfileHeader.module.scss";
 
 interface IProfileHeaderProps {
     profile: Profile;
+    isMasterPage?: boolean;
 }
 
-export const ProfileHeader: FC<IProfileHeaderProps> = ({ profile }) => {
+export const ProfileHeader: FC<IProfileHeaderProps> = ({ profile, isMasterPage }) => {
     const user = useAuth();
     const params = useParams();
     
@@ -33,7 +34,7 @@ export const ProfileHeader: FC<IProfileHeaderProps> = ({ profile }) => {
                         <span className={style.info}>{profile?.description}</span>
                     </div>
                     <div className={style.profileHeader_container__wrap_description_groupBtns}>
-                        <GroupButton myPage={user?.user?._id === params.userId} role={profile?.role} profile={profile} />
+                        <GroupButton myPage={user?.user?._id === params.userId} profile={profile} isMasterPage={isMasterPage} />
                     </div>
                 </div>
             </div>

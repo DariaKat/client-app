@@ -19,6 +19,7 @@ import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/providers/authProvider";
 import { useGetTimesSegment } from "../hooks/getTimesSegment";
 import { timeSelector } from "../model/listTimeSlice";
+import { v4 as uuidv4 } from 'uuid';
 
 interface IAddProcedureDialogProps {
   onClose: () => void;
@@ -98,13 +99,20 @@ export const AddProcedureDialog: FC<IAddProcedureDialogProps> = ({
               []
           );
       
-        await setDoc(doc(db, "UserProcedure", myUuid), {
+        const uuidId = uuidv4();
+        
+        
+        await setDoc(doc(db, "UserProcedure", uuidId), {
             ...data,
+            _id: uuidId,
             masterUuid: uuid,
-        });
-        await setDoc(doc(db, "AppointmentsProcedure", uuid), {
-            ...data,
             userUuid: myUuid,
+        });
+        await setDoc(doc(db, "AppointmentsProcedure", uuidId), {
+            ...data,
+            _id: uuidId,
+            userUuid: myUuid,
+            masterUuid: uuid,
         });
       
         const washingtonRef = doc(db, "MasterProcedure", uuid);

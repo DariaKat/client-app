@@ -1,0 +1,1 @@
+export { MasterAsyncPage as MasterPage } from './ui/MasterPage.async';
