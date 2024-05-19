@@ -15,7 +15,7 @@ export const ActionMasterProfile: FC<IActionMasterProfileProps> = () => {
     return (
         <div className={style.actionMasterProfile}>
             <ButtonGroup variant="contained" aria-label="Basic button group">
-                <Button>Расписание</Button>
+                {/* <Button>Расписание</Button> */}
                 <Link to={`/user/${user?.user?._id}/master`}><Button>Записи</Button></Link>
             </ButtonGroup>
         </div>

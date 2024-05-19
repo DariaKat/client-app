@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,13 +10,32 @@ import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "@/app/providers/authProvider";
 
+import { IPanel } from '../model/userSlice';
+import { UpdateProfile } from './UpdateProfile';
 import { useGetData } from '../hooks/useGetData';
 
 import style from './AdminPanel.module.scss';
 
+
 export const AdminPanel: FC = () => {
     const { profiles, loading } = useGetData();
+
+    const [isOpen, setIsOpen] = useState<IPanel | null>(null);
+
+    const deleteProfile = (id: string) => async () => { 
+        await deleteDoc(doc(db, "UserProfile", id));
+    };
+
+    const onOpen = (row: IPanel) => () => {
+        setIsOpen(row);
+    };
+
+    const onClose = () => { 
+        setIsOpen(null);
+    };
 
     return (
         <div className={style.adminPanel}>
@@ -49,8 +68,8 @@ export const AdminPanel: FC = () => {
                                     <TableCell>{row.role}</TableCell>
                                     <TableCell>
                                         <div className={style.adminPanel_actions}>
-                                            <Button variant="contained"><ModeEditIcon /></Button>
-                                            <Button variant="contained"><DeleteIcon /></Button>
+                                            <Button variant="contained" onClick={onOpen(row)}><ModeEditIcon /></Button>
+                                            <Button variant="contained" onClick={deleteProfile(row._id)}><DeleteIcon /></Button>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -58,7 +77,7 @@ export const AdminPanel: FC = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>}
-           
+            {isOpen && <UpdateProfile data={isOpen} onClose={onClose} />}
         </div>
     );
 };

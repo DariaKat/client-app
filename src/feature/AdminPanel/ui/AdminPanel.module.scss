@@ -11,3 +11,10 @@
         column-gap: 10px;
     }
 }
+
+.form {
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    row-gap: 24px;
+}
